@@ -19,6 +19,10 @@ class PHP:
                 if isinstance(arg, unicode):
                     arg = arg.encode('utf-8')
                 yield '\'%s\'' % self.__escape(arg)
+            elif isinstance(arg, dict):
+                yield 'array({0})'.format(
+                    ', '.join(['"{0}" => "{1}"'.format(key, value) for key, value in arg.items()])
+                )
             elif arg is None:
                 yield 'NULL'
             else:
